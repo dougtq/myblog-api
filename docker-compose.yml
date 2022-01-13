@@ -1,0 +1,14 @@
+version: "2"
+services:
+  mongo:
+    image: mvertes/alpine-mongo
+    ports:
+    - "28017:27017"
+  blog:
+    build: .
+    container_name: blog_api
+    env_file: .env
+    ports:
+    - "3000:3000"
+    links:
+    - mongo

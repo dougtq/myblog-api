@@ -109,7 +109,8 @@ const updatePost = async (id, data = {}) => {
   const db = await getModel()
 
   const post = await db.findOneAndUpdate({
-    _id: ObjectId(id)
+    _id: ObjectId(id),
+    Active: true
   }, {
     $set: {
       ...data,

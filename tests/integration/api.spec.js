@@ -79,7 +79,7 @@ describe("API tests", () => {
             const response = await request(app)
                 .get(process.env.API_PREFIX + "/posts/" + "61e1902b81b61221b7f3c763")
     
-            expect(response.status).equal(400)
+            expect(response.status).equal(404)
         })
 
         it("should not return a valid response when the post is not existent", async () => {    
@@ -92,22 +92,48 @@ describe("API tests", () => {
                     "Categories": ["second"]
                 })
                         
+            expect(response.status).equal(404)
+            expect(response.body.message).equals("Post not found", "Invalid message")
+        })
+
+        it("should not return a valid response when the post is not existent", async () => {    
+            const response = await request(app)
+                .put(process.env.API_PREFIX + "/posts/" + "61e1902b81b61221b7f3c763")
+                .send({
+                    "Description": "Sample text 2",
+                    "Author": "Douglas E. Alves",
+                    "Categories": ["second"]
+                })
+                        
             expect(response.status).equal(400)
             expect(response.body.message).equals("Your post does not have the necessary fields (title and/or description and/or author) to be updated", "Invalid message")
         })
 
         it("should not return a valid response when the post is not existent", async () => {    
             const response = await request(app)
-                .delete(process.env.API_PREFIX + "/posts/" + "61e1902b81b61221b7f3c763")
+                .post(process.env.API_PREFIX + "/posts")
+                .send({
+                    "Title": "Testing 2...",
+                    "Description": "Sample text 2",
+                    "Categories": ["second"]
+                })
                         
             expect(response.status).equal(400)
+            expect(response.body.message).equals("Your post does not have the necessary fields (title and/or description and/or author) to be created", "Invalid message")
+        })
+
+        it("should not return a valid response when the post is not existent", async () => {    
+            const response = await request(app)
+                .delete(process.env.API_PREFIX + "/posts/" + "61e1902b81b61221b7f3c763")
+                        
+            expect(response.status).equal(404)
         })
 
         it("should not return a valid response when the post is not existent", async () => {    
             const response = await request(app)
                 .delete(process.env.API_PREFIX + "/posts/" + postId)
                         
-            expect(response.status).equal(400)
+            expect(response.status).equal(404)
         })
 
     })

@@ -3,16 +3,15 @@ const { deletePost } = require("../model/posts")
 module.exports = async function (req) {
     let post = null
     let message = "Your post id was not found"
-    let statusCode = 400
+    let statusCode = 404
     try {
         post = await deletePost(req.params["id"])
 
-        if (!post) {
-            return
+        if (post) {
+            statusCode = 200
+            message = "Post was deleted successfully"
         }
 
-        statusCode = 200
-        message = "Post was deleted successfully"
     } catch (error) {
         console.error(error)
         statusCode = 500

@@ -7,7 +7,7 @@ module.exports = async function (req) {
     let message = "Your post does not have the necessary fields (title and/or description and/or author) to be updated"
     let statusCode = 400
     try {
-        if (!Title.trim() || !Description.trim() || !Author.trim()) {
+        if (!String(Title || "").trim() || !String(Description || "").trim() || !String(Author || "").trim()) {
             return
         }
 
@@ -16,6 +16,9 @@ module.exports = async function (req) {
         if (post) {
             statusCode = 200
             message = "Post was updated successfully"
+        } else {
+            statusCode = 404
+            message = "Post not found" 
         }
     } catch (error) {
         console.error(error)

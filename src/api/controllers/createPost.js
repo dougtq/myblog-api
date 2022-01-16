@@ -6,7 +6,7 @@ module.exports = async function (req) {
     let message = "Your post does not have the necessary fields (title and/or description and/or author) to be created"
     let statusCode = 400
     try {
-        if (!Title.trim() || !Description.trim() || !Author.trim()) {
+        if (!String(Title || "").trim() || !String(Description|| "").trim() || !String(Author || "").trim()) {
             return
         }
 

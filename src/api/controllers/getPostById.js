@@ -2,7 +2,7 @@ const { getPostById } = require("../model/posts")
 
 module.exports = async function (req) {
     let post = null
-    let statusCode = 400
+    let statusCode = 404
     try {
         post = await getPostById(req.params["id"])
 
